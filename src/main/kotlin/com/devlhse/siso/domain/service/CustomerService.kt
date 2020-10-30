@@ -1,11 +1,11 @@
-package com.devlhse.siso.service
+package com.devlhse.siso.domain.service
 
-import com.devlhse.siso.extensions.toEntity
-import com.devlhse.siso.extensions.toResponse
-import com.devlhse.siso.model.request.CustomerRequest
-import com.devlhse.siso.model.response.CustomerResponse
-import com.devlhse.siso.repository.CustomerRepository
-import com.devlhse.siso.validation.ValidationUtil
+import com.devlhse.siso.domain.extensions.toEntity
+import com.devlhse.siso.domain.extensions.toResponse
+import com.devlhse.siso.domain.model.request.CustomerRequest
+import com.devlhse.siso.domain.model.response.CustomerResponse
+import com.devlhse.siso.domain.validation.ValidationUtil
+import com.devlhse.siso.resources.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service

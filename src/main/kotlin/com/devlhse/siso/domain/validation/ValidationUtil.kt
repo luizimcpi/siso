@@ -1,4 +1,4 @@
-package com.devlhse.siso.validation
+package com.devlhse.siso.domain.validation
 
 import org.springframework.stereotype.Component
 import javax.validation.ConstraintViolationException

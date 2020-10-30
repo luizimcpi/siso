@@ -1,8 +1,8 @@
-package com.devlhse.siso.extensions
+package com.devlhse.siso.domain.extensions
 
-import com.devlhse.siso.model.entity.Customer
-import com.devlhse.siso.model.request.CustomerRequest
-import com.devlhse.siso.model.response.CustomerResponse
+import com.devlhse.siso.domain.model.entity.Customer
+import com.devlhse.siso.domain.model.request.CustomerRequest
+import com.devlhse.siso.domain.model.response.CustomerResponse
 import java.time.LocalDateTime
 import java.util.UUID
 

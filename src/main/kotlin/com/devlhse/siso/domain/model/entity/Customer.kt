@@ -1,4 +1,4 @@
-package com.devlhse.siso.model.entity
+package com.devlhse.siso.domain.model.entity
 
 import java.time.LocalDate
 import java.time.LocalDateTime

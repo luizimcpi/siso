@@ -1,4 +1,4 @@
-package com.devlhse.siso.model.response
+package com.devlhse.siso.domain.model.response
 
 import java.time.LocalDate
 import java.time.LocalDateTime

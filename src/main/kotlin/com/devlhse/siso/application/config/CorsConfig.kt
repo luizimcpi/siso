@@ -1,4 +1,4 @@
-package com.devlhse.siso.config
+package com.devlhse.siso.application.config
 
 import org.springframework.stereotype.Component
 import java.io.IOException

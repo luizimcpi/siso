@@ -40,18 +40,19 @@
 #### Response ( 201 Created)
 ```json
 {
-  "code": 201,
-  "status": "CREATED",
-  "data" : {
-      "id": "5e2cf612-4ba6-424f-9cf9-a07e76ebbbb0",
-      "name": "Customer",
-      "email": "customer@email.com",
-      "mobile_phone": "554499999-9999",
-      "phone": "55449999-9999",
-      "birth_date": "1990-01-01",
-      "document": "111.222.333-44",
-      "created_at": "",
-      "updated_at": ""
-  }
+    "code": 201,
+    "status": "201 CREATED",
+    "data": {
+        "id": "03e14143-331f-436d-9104-6a9297f92464",
+        "user_id": 1,
+        "name": "Customer",
+        "email": "customer@email.com",
+        "mobile_phone": "554499999-9999",
+        "phone": "55449999-9999",
+        "birth_date": "1990-01-01",
+        "document": "111.222.333-44",
+        "created_at": "2020-10-30T18:20:50.469",
+        "updated_at": "2020-10-30T18:20:50.47"
+    }
 }
 ```
