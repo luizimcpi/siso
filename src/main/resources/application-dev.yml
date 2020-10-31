@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     username: postgres
-    password: 123456
+    password: postgres
     url: jdbc:postgresql://localhost:5432/siso
   jpa:
     hibernate:

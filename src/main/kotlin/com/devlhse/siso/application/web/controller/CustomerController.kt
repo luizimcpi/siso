@@ -4,6 +4,8 @@ import com.devlhse.siso.domain.model.request.CustomerRequest
 import com.devlhse.siso.domain.model.response.CustomerResponse
 import com.devlhse.siso.domain.model.response.GenericResponse
 import com.devlhse.siso.domain.service.CustomerService
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,9 +17,11 @@ import java.net.URI
 import javax.validation.Valid
 
 @RestController
+@Api(value = "Customers")
 @RequestMapping("/customers")
 class CustomerController(val customerService: CustomerService) {
 
+    @ApiOperation(value = "Create new customer")
     @PostMapping(produces = ["application/json"], consumes = ["application/json"])
     fun createCustomer(@RequestHeader("userId") userId: Long,
                        @Valid @RequestBody customerRequest: CustomerRequest): ResponseEntity<GenericResponse<CustomerResponse>> {
