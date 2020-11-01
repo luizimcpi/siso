@@ -36,7 +36,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
-	testImplementation("com.opentable.components:otj-pg-embedded:0.13.1")
+	testImplementation("com.h2database:h2")
 	testImplementation("org.flywaydb:flyway-core:6.4.1")
 }
 

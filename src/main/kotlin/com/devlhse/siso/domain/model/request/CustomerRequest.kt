@@ -9,20 +9,20 @@ data class CustomerRequest (
 
         @field:NotNull(message = "{customer_name.required}")
         @field:NotEmpty(message = "{customer_name.empty}")
-        val name: String?,
+        val name: String? = null,
 
         @field:NotNull(message = "{customer_email.required}")
         @field:NotEmpty(message = "{customer_email.empty}")
         @field:Email(message = "{customer_email.invalid}" )
-        val email: String?,
+        val email: String? = null,
 
         @field:NotNull(message = "{customer_mobilePhone.required}")
         @field:NotEmpty(message = "{customer_mobilePhone.empty}")
-        val mobilePhone: String?,
+        val mobilePhone: String? = null,
 
-        val phone: String?,
+        val phone: String? = null,
 
         val birthDate: LocalDate,
 
-        val document: String?
+        val document: String? = null
 )

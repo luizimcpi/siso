@@ -1,13 +1,14 @@
 server:
-  port: 8080
   servlet:
     context-path: /api
 
 spring:
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:15432/postgres
+    username: sa
+    password: password
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update

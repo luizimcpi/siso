@@ -11,9 +11,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-validation:
-  messages:
-    customer:
-      first-name:
-        required: Name cant be empty
