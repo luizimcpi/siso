@@ -3,21 +3,25 @@ package com.devlhse.siso.domain.model.request
 import java.time.LocalDate
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 
 data class CustomerRequest (
-        @NotEmpty(message = "Name cant be blank")
-        val name: String,
 
-        @NotEmpty(message = "email cant be blank")
-        @Email(message = "Invalid email address" )
-        val email: String,
+        @field:NotNull(message = "{customer_name.required}")
+        @field:NotEmpty(message = "{customer_name.empty}")
+        val name: String?,
 
-        @NotEmpty(message = "Mobile phone cant be blank")
-        val mobilePhone: String,
+        @field:NotNull(message = "{customer_email.required}")
+        @field:NotEmpty(message = "{customer_email.empty}")
+        @field:Email(message = "{customer_email.invalid}" )
+        val email: String?,
+
+        @field:NotNull(message = "{customer_mobilePhone.required}")
+        @field:NotEmpty(message = "{customer_mobilePhone.empty}")
+        val mobilePhone: String?,
 
         val phone: String?,
 
-        @NotEmpty(message = "Birth date cant be blank")
         val birthDate: LocalDate,
 
         val document: String?
