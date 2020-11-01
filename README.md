@@ -1,7 +1,14 @@
 # SISO CUSTOMER API 
 ## Kotlin RESTful Spring Boot API
+[![Build Status](https://travis-ci.org/luizimcpi/siso.svg?branch=master)](https://travis-ci.org/luizimcpi/siso)
+
 
 ## Migrations 
+IMPORTANT: Migrations is running automatically when application starts. If you want disable it just comment
+the following line in build.gradle file and run "Migrate Command"
+```
+implementation("org.flywaydb:flyway-core:6.4.1")
+```
 
 ### Info command
 ```
