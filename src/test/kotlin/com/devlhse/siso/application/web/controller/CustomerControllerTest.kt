@@ -5,8 +5,8 @@ import com.devlhse.siso.domain.service.AuthService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyString
-import org.mockito.Mockito.doNothing
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -31,7 +31,7 @@ class CustomerControllerTest {
     private lateinit var objectMapper: ObjectMapper
 
     @MockBean
-    private lateinit var service: AuthService
+    private lateinit var authService: AuthService
 
 
     @Test
@@ -46,18 +46,17 @@ class CustomerControllerTest {
                 "333.333.333-33"
         )
 
-        doNothing().`when`(service).authenticate(anyString())
+        `when`(authService.authenticate(anyString())).thenReturn("1")
 
         mockMvc.perform(post("/customers")
                 .contentType("application/json")
-                .header("userId", "1")
                 .header("Authorization", "Bearer token")
                 .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(status().isCreated)
     }
 
     @Test
-    fun givenCustomerURIWithPostAndValidCustomerRequestWithoutUserId_whenMockMVC_thenResponseBadRequest() {
+    fun givenCustomerURIWithPostAndValidCustomerRequestWithoutAuthorization_whenMockMVC_thenResponseBadRequest() {
 
         val customerRequest = CustomerRequest(
                 "Customer",
@@ -70,7 +69,6 @@ class CustomerControllerTest {
 
         mockMvc.perform(post("/customers")
                 .contentType("application/json")
-                .header("Authorization", "Bearer token")
                 .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(status().isBadRequest)
     }
@@ -90,7 +88,6 @@ class CustomerControllerTest {
 
         mockMvc.perform(post("/customers")
                 .contentType("application/json")
-                .header("userId", "1")
                 .header("Authorization", "Bearer token")
                 .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(status().isBadRequest)
@@ -111,7 +108,6 @@ class CustomerControllerTest {
 
         mockMvc.perform(post("/customers")
                 .contentType("application/json")
-                .header("userId", "1")
                 .header("Authorization", "Bearer token")
                 .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(status().isBadRequest)

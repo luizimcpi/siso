@@ -26,12 +26,11 @@ class CustomerController(val authService: AuthService,
     @ApiOperation(value = "Create new customer")
     @PostMapping(produces = ["application/json"], consumes = ["application/json"])
     fun createCustomer(@RequestHeader("Authorization") token: String,
-                       @RequestHeader("userId") userId: Long,
                        @RequestBody @Valid customerRequest: CustomerRequest): ResponseEntity<GenericResponse<CustomerResponse>> {
 
-        authService.authenticate(token)
+        val userId = authService.authenticate(token)
 
-        val customerResponse = customerService.create(customerRequest, userId)
+        val customerResponse = customerService.create(customerRequest, userId.toLong())
 
         return ResponseEntity.created(URI.create("/customers")).body(GenericResponse(
                 code = HttpStatus.CREATED.value(),

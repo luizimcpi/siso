@@ -3,6 +3,8 @@ server:
     context-path: /api
 
 spring:
+  application:
+    name: siso-api
   datasource:
     username: sa
     password: password
@@ -16,3 +18,4 @@ spring:
 auth-service:
   authentication:
     url: https://auth-service-test.com/api
+  secret-key: GmpGT97dooIJGBsknf30uhYLxveSBCFM
