@@ -63,7 +63,6 @@ implementation("org.flywaydb:flyway-core:6.4.1")
     }
 }
 ```
-
 ## Swagger
 ```
 http://localhost:8080/api/swagger-ui.html
