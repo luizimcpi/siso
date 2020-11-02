@@ -20,6 +20,12 @@ implementation("org.flywaydb:flyway-core:6.4.1")
 ./gradlew flywayMigrate -Dflyway.url=jdbc:postgresql://localhost:5432/siso -Dflyway.user=postgres -Dflyway.password=123456
 ```
 
+## Run Configurations
+#### ENV VARS
+```
+AUTH_SECRET_KEY=GmpGT97dooIJGBsknf30uhYLxveSBCFM
+```
+
 ## Health Check
 #### Request
 - Method: GET

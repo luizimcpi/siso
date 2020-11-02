@@ -1,8 +1,9 @@
 package com.devlhse.siso.domain.service
 
 import com.devlhse.siso.domain.exception.UnauthorizedException
+import com.devlhse.siso.domain.util.Constants.AUTH_SECRET_KEY
 import com.devlhse.siso.resources.client.AuthorizationClient
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.doNothing
@@ -16,21 +17,26 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("test")
 class AuthServiceTest {
 
+    @BeforeAll
+    fun setUp(){
+        System.setProperty(AUTH_SECRET_KEY, "GmpGT97dooIJGBsknf30uhYLxveSBCFM");
+    }
+
     @MockBean
     private lateinit var authorizationClient: AuthorizationClient
 
     @Autowired
     private lateinit var authService: AuthService
 
-    val validBearerToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE2LCJpYXQiOjE2MDQyODY2NDgsImV4cCI6MTYwNDI5MDI0OH0.tCP6WsqpY-xG1D2M5Kpxe6zkReGRIen9wAbNanwZZ9E"
+    val expiredBearerToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE2LCJpYXQiOjE2MDQyODY2NDgsImV4cCI6MTYwNDI5MDI0OH0.tCP6WsqpY-xG1D2M5Kpxe6zkReGRIen9wAbNanwZZ9E"
     val invalidBearerToken = "Bearer teste"
 
     @Test
-    fun givenValidToken_whenCallAuthenticate_shouldGetUserIdInfoFromTokenSuccess() {
-        doNothing().`when`(authorizationClient).authenticate(validBearerToken)
-        val result = authService.authenticate(bearerToken = validBearerToken)
-        val validUserId = "16"
-        Assertions.assertEquals(validUserId, result)
+    fun givenInvalidExpiredToken_whenCallAuthenticate_shouldThrowUnauthorizedException() {
+        doNothing().`when`(authorizationClient).authenticate(expiredBearerToken)
+        assertThrows<UnauthorizedException> {
+            authService.authenticate(bearerToken = invalidBearerToken)
+        }
     }
 
     @Test()

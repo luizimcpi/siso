@@ -18,4 +18,3 @@ spring:
 auth-service:
   authentication:
     url: https://auth-service-test.com/api
-  secret-key: GmpGT97dooIJGBsknf30uhYLxveSBCFM
