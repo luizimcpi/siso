@@ -1,5 +1,6 @@
 package com.devlhse.siso.application.web.controller
 
+import com.devlhse.siso.domain.exception.UnauthorizedException
 import com.devlhse.siso.domain.extensions.removeQuotation
 import com.devlhse.siso.domain.model.response.GenericResponse
 import org.slf4j.Logger
@@ -37,6 +38,17 @@ class GlobalExceptionController {
                     code = HttpStatus.BAD_REQUEST.value(),
                     status = HttpStatus.BAD_REQUEST.toString(),
                     data = resultErrors
+                )
+        )
+    }
+
+    @ExceptionHandler(value = [UnauthorizedException::class])
+    fun validationHandler(exception: UnauthorizedException): ResponseEntity<GenericResponse<String>> {
+        return ResponseEntity.status(401).body(
+                GenericResponse(
+                        code = HttpStatus.UNAUTHORIZED.value(),
+                        status = HttpStatus.UNAUTHORIZED.toString(),
+                        data = "Token is not preset or invalid!"
                 )
         )
     }

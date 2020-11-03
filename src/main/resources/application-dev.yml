@@ -4,6 +4,8 @@ server:
     context-path: /api
 
 spring:
+  application:
+    name: siso-api
   datasource:
     username: postgres
     password: postgres
@@ -11,3 +13,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+auth-service:
+  authentication:
+    url: https://adonis-auth-service.herokuapp.com/api

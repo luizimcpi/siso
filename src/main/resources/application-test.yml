@@ -3,6 +3,8 @@ server:
     context-path: /api
 
 spring:
+  application:
+    name: siso-api
   datasource:
     username: sa
     password: password
@@ -12,3 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
+
+auth-service:
+  authentication:
+    url: https://auth-service-test.com/api
