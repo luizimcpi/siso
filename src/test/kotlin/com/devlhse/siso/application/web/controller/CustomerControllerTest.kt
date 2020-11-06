@@ -2,14 +2,15 @@ package com.devlhse.siso.application.web.controller
 
 import com.devlhse.siso.domain.model.request.CustomerRequest
 import com.devlhse.siso.domain.service.AuthService
+import com.devlhse.siso.domain.service.CustomerService
+import com.devlhse.siso.resources.repository.CustomerRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyString
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
@@ -18,9 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 
-
-@SpringBootTest
-@AutoConfigureMockMvc
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@AutoConfigureMockMvc
+@WebMvcTest(controllers = [CustomerController::class])
 @ActiveProfiles("test")
 class CustomerControllerTest {
 
@@ -33,9 +34,15 @@ class CustomerControllerTest {
     @MockBean
     private lateinit var authService: AuthService
 
+    @MockBean
+    private lateinit var customerService: CustomerService
+
+    @MockBean
+    private lateinit var customerRepository: CustomerRepository
+
 
     @Test
-    fun givenCustomerURIWithPostAndValidCustomerRequest_whenMockMVC_thenResponseCreated() {
+    fun `givenCustomerURIWithPostAndValidCustomerRequest_whenMockMVC_thenResponseCreated`() {
 
         val customerRequest = CustomerRequest(
                 "Customer",
@@ -56,7 +63,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    fun givenCustomerURIWithPostAndValidCustomerRequestWithoutAuthorization_whenMockMVC_thenResponseBadRequest() {
+    fun `givenCustomerURIWithPostAndValidCustomerRequestWithoutAuthorization_whenMockMVC_thenResponseBadRequest`() {
 
         val customerRequest = CustomerRequest(
                 "Customer",
@@ -75,7 +82,7 @@ class CustomerControllerTest {
 
 
     @Test
-    fun givenCustomerURIWithPostAndInvalidCustomerRequestWhereNameIsEmpty_whenMockMVC_thenResponseBadRequest() {
+    fun `givenCustomerURIWithPostAndInvalidCustomerRequestWhereNameIsEmpty_whenMockMVC_thenResponseBadRequest`() {
 
         val customerRequest = CustomerRequest(
                 "",
@@ -96,7 +103,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    fun givenCustomerURIWithPostAndInvalidCustomerRequestWhereNameIsNull_whenMockMVC_thenResponseBadRequest() {
+    fun `givenCustomerURIWithPostAndInvalidCustomerRequestWhereNameIsNull_whenMockMVC_thenResponseBadRequest`() {
 
         val customerRequest = CustomerRequest(
                 email = "customer@customer.com.br",

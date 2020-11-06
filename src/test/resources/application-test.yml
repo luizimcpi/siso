@@ -1,13 +1,9 @@
-server:
-  servlet:
-    context-path: /api
-
 spring:
   application:
     name: siso-api
   datasource:
     username: sa
-    password: password
+    password:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
   jpa:
