@@ -2,6 +2,7 @@ package com.devlhse.siso.domain.service
 
 import com.devlhse.siso.domain.exception.UnauthorizedException
 import com.devlhse.siso.domain.util.Constants.AUTH_SECRET_KEY
+import com.devlhse.siso.domain.util.Constants.JWT_START_INDEX
 import com.devlhse.siso.resources.client.AuthorizationClient
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 
-
+@SuppressWarnings("TooGenericExceptionCaught")
 @Service
 class AuthService(val authorizationClient: AuthorizationClient,
                   val env: Environment) {
@@ -31,12 +32,12 @@ class AuthService(val authorizationClient: AuthorizationClient,
 
             return claims["uid"].toString()
         } catch (e: Exception) {
-            log.error(e.message)
+            log.error(e.message.toString())
             throw UnauthorizedException()
         }
     }
 
     private fun resolveToken(bearerToken: String): String {
-        return bearerToken.substring(7, bearerToken.length)
+        return bearerToken.substring(JWT_START_INDEX, bearerToken.length)
     }
 }

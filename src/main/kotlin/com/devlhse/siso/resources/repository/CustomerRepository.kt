@@ -1,7 +1,9 @@
 package com.devlhse.siso.resources.repository
 
 import com.devlhse.siso.domain.model.entity.Customer
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.PagingAndSortingRepository
+import java.util.UUID
 
-interface CustomerRepository : JpaRepository<Customer, String> {
+interface CustomerRepository : PagingAndSortingRepository<Customer, String> {
+    fun findByIdAndUserId(id: UUID, userId: Long): Customer
 }

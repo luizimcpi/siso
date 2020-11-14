@@ -1,5 +1,6 @@
 package com.devlhse.siso.application.web.controller
 
+import com.devlhse.siso.domain.exception.NotFoundException
 import com.devlhse.siso.domain.exception.UnauthorizedException
 import com.devlhse.siso.domain.extensions.removeQuotation
 import com.devlhse.siso.domain.model.response.GenericResponse
@@ -17,7 +18,8 @@ class GlobalExceptionController {
     val log: Logger = LoggerFactory.getLogger(GlobalExceptionController::class.java)
 
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
-    fun validationHandler(exception: MethodArgumentNotValidException): ResponseEntity<GenericResponse<MutableList<String>>> {
+    fun validationHandler(exception: MethodArgumentNotValidException):
+            ResponseEntity<GenericResponse<MutableList<String>>> {
         log.error("Errors: ${exception.message}")
 
         val fieldErrors = exception.bindingResult.fieldErrors
@@ -43,12 +45,23 @@ class GlobalExceptionController {
     }
 
     @ExceptionHandler(value = [UnauthorizedException::class])
-    fun validationHandler(exception: UnauthorizedException): ResponseEntity<GenericResponse<String>> {
-        return ResponseEntity.status(401).body(
+    fun unauthorizedExceptionHandler(exception: UnauthorizedException): ResponseEntity<GenericResponse<String>> {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(
                 GenericResponse(
                         code = HttpStatus.UNAUTHORIZED.value(),
                         status = HttpStatus.UNAUTHORIZED.toString(),
                         data = "Token is not preset or invalid!"
+                )
+        )
+    }
+
+    @ExceptionHandler(value = [NotFoundException::class])
+    fun notFoundExceptionHandler(exception: NotFoundException): ResponseEntity<GenericResponse<String>> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(
+                GenericResponse(
+                        code = HttpStatus.NOT_FOUND.value(),
+                        status = HttpStatus.NOT_FOUND.toString(),
+                        data = exception.message.toString()
                 )
         )
     }

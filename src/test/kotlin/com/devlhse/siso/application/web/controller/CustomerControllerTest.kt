@@ -1,6 +1,8 @@
 package com.devlhse.siso.application.web.controller
 
+import com.devlhse.siso.domain.exception.NotFoundException
 import com.devlhse.siso.domain.model.request.CustomerRequest
+import com.devlhse.siso.domain.model.response.CustomerResponse
 import com.devlhse.siso.domain.service.AuthService
 import com.devlhse.siso.domain.service.CustomerService
 import com.devlhse.siso.resources.repository.CustomerRepository
@@ -14,13 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.UUID
 
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureMockMvc
 @WebMvcTest(controllers = [CustomerController::class])
 @ActiveProfiles("test")
 class CustomerControllerTest {
@@ -121,5 +124,44 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$.data").isArray)
                 .andExpect(jsonPath("$.data", hasItem("name: Name can´t be empty.")))
                 .andExpect(jsonPath("$.data", hasItem("name: Name is required.")))
+    }
+
+    @Test
+    fun `givenCustomerURIWithGetAndValidCustomerIdAndUserId_whenMockMVC_thenResponseOk`() {
+        val customerId = UUID.randomUUID()
+        val response = CustomerResponse(
+                customerId,
+                1L,
+                "Customer",
+                "customer@customer.com.br",
+                "551399999999",
+                "551333333333",
+                LocalDate.now(),
+                "333.333.333-33",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        )
+
+        `when`(authService.authenticate(anyString())).thenReturn("1")
+        `when`(customerService.getById(customerId, 1L)).thenReturn(response)
+
+        mockMvc.perform(get("/customers/$customerId")
+                .contentType("application/json")
+                .header("Authorization", "Bearer token"))
+                .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `givenCustomerURIWithGetAndValidCustomerIdAndInvalidUserId_whenMockMVC_thenResponseNotFound`() {
+
+        val customerId = UUID.randomUUID()
+
+        `when`(authService.authenticate(anyString())).thenReturn("2")
+        `when`(customerService.getById(customerId, 2L)).thenThrow(NotFoundException::class.java)
+
+        mockMvc.perform(get("/customers/$customerId")
+                .contentType("application/json")
+                .header("Authorization", "Bearer token"))
+                .andExpect(status().isNotFound)
     }
 }

@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "2.3.5.RELEASE"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.flywaydb.flyway") version "6.3.2"
+	id("io.gitlab.arturbosch.detekt") version "1.7.2"
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.jpa") version "1.3.72"
@@ -14,6 +15,7 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
+	jcenter()
 	mavenCentral()
 }
 
