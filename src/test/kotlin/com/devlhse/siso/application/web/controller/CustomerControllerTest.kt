@@ -14,6 +14,7 @@ import org.mockito.Mockito.anyString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.domain.PageImpl
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -163,5 +164,34 @@ class CustomerControllerTest {
                 .contentType("application/json")
                 .header("Authorization", "Bearer token"))
                 .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `givenCustomerURIWithGetAndValidUserIdAndValidPageNumber_whenMockMVC_thenResponseOk`() {
+        val customerId = UUID.randomUUID()
+        val validUserId = 1L
+        val response = CustomerResponse(
+                customerId,
+                validUserId,
+                "Customer",
+                "customer@customer.com.br",
+                "551399999999",
+                "551333333333",
+                LocalDate.now(),
+                "333.333.333-33",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        )
+
+        val customers = listOf(response)
+        val pageResponse = PageImpl<CustomerResponse>(customers)
+
+        `when`(authService.authenticate(anyString())).thenReturn("1")
+        `when`(customerService.findAll(validUserId, 0, 20)).thenReturn(pageResponse)
+
+        mockMvc.perform(get("/customers?page=0")
+                .contentType("application/json")
+                .header("Authorization", "Bearer token"))
+                .andExpect(status().isOk)
     }
 }

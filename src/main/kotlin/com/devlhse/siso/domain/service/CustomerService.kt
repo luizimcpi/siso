@@ -9,6 +9,8 @@ import com.devlhse.siso.domain.repository.UserCustomerRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -38,4 +40,10 @@ class CustomerService(val repository: UserCustomerRepository) {
             throw NotFoundException("Customer not found!")
         }
     }
+
+    fun findAll(userId: Long, evalPage: Int, maxItensPerPage: Int): Page<CustomerResponse> {
+        return repository.findAllByUserId(userId, PageRequest.of(evalPage, maxItensPerPage))
+                .map { customer -> customer.toResponse() }
+    }
+
 }

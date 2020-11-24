@@ -6,8 +6,10 @@ import com.devlhse.siso.domain.model.response.CustomerResponse
 import com.devlhse.siso.domain.model.response.GenericResponse
 import com.devlhse.siso.domain.service.AuthService
 import com.devlhse.siso.domain.service.CustomerService
+import com.devlhse.siso.domain.util.Constants.MAX_ITENS_PER_PAGE
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 import java.util.UUID
@@ -61,4 +64,21 @@ class CustomerController(val authService: AuthService,
                 data = customerResponse)
         )
     }
+
+    @ApiOperation(value = "Get paged customer by userId")
+    @GetMapping(produces = ["application/json"])
+    fun getCustomers(@RequestHeader("Authorization") token: String,
+                     @RequestParam("page") page: Int): ResponseEntity<GenericResponse<Page<CustomerResponse>>> {
+
+        val userId = authService.authenticate(token)
+
+        val customerResponse = customerService.findAll(userId.toLong(), page, MAX_ITENS_PER_PAGE)
+
+        return ResponseEntity.ok(GenericResponse(
+                code = HttpStatus.OK.value(),
+                status = HttpStatus.OK.toString(),
+                data = customerResponse)
+        )
+    }
+
 }
