@@ -41,6 +41,7 @@ dependencies {
 	}
 	testImplementation("com.h2database:h2")
 	testImplementation("org.flywaydb:flyway-core:6.4.1")
+	testImplementation ("io.mockk:mockk:1.10.2")
 }
 
 dependencyManagement {
